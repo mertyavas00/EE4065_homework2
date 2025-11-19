@@ -22,22 +22,28 @@ The goal was to calculate the histogram of a given grayscale image to analyze pi
 - I wrote a function that iterates through the image array.
 - It counts the frequency of each pixel value (0-255) and stores it in a 256-element array called `my_histogram`.
 - **Verification:** I verified the results by checking the array in the STM32 Live Expressions window, ensuring the counts matched the input data.
+  ![Histogram Result](screenshots/histogram.png)
 
 ### Q2: Histogram Equalization
 
 This step involved enhancing the contrast of the image using the histogram equalization method.
 
 - First, I derived the mathematical formula based on the Cumulative Distribution Function (CDF) on paper.
+  ![Hand Derived Formula](screenshots/paper.jpg)
 - I implemented the algorithm in C by calculating the CDF from the histogram and normalizing the values to the 0-255 range.
 - The original image array was updated with the new mapped values.
 - **Result:** The new histogram covered a wider dynamic range compared to the original one, indicating improved contrast.
+
+![Equalization Result](screenshots/equalized.png)
 
 ### Q3: 2D Convolution and Filtering
 
 I implemented a generic convolution function that takes a 3x3 kernel matrix and applies it to the image.
 
 - **Low Pass Filtering:** I used a kernel where all elements are 1 (normalized by dividing by 9). This successfully smoothed the image values, creating a blurring effect.
+  ![Low Pass Result](screenshots/lowpass.png)
 - **High Pass Filtering:** I used a Laplacian-style kernel with a positive center and negative surroundings. This filter highlighted the edges and transitions in the image while setting flat areas to near-zero values.
+  ![High Pass Result](screenshots/highpass.png)
 
 ### Q4: Median Filtering
 
@@ -46,6 +52,7 @@ To remove noise while preserving edges, I implemented a median filter.
 - Since this requires finding the median value in a local neighborhood, I wrote a helper function for **Bubble Sort**.
 - For every pixel, the code collects the 3x3 neighborhood into a temporary array, sorts it, and picks the middle value (index 4).
 - **Observation:** unlike the low pass filter, the median filter removed noise without blurring the sharp transitions between different pixel intensity blocks.
+  ![Median Filter Result](screenshots/median.png)
 
 ## How to Run
 
